@@ -1,0 +1,63 @@
+{% extends "base_search.html" %}
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% block content %}
+	<form method="post" action="{% url 'search'  %}">
+		{% csrf_token %}
+		{{ form.as_ul}}
+		<button type="Submit">Submit</button>
+	</form>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th scope="col">	#			</th>
+				
+				<th scope="col">	Symbol 		</th>
+				<th scope="col">	Name 		</th>
+				<th scope="col">	Market Capital</th>
+				<th scope="col">	Sector 		</th>
+				<th scope="col">	Industry 	</th>
+			</tr>
+		</thead>
+		<tbody>
+			<div >
+				{% for stock in data %}
+					
+					<tr>
+						<th scope="row">{{ forloop.counter }}</th>
+						
+						<td><a href="{% url 'price' stock.id %}">{{stock.Symbol}}</a></td>
+						<td>	{{stock.Name}}		</td>
+						<td>	{{stock.MarketCap}}	</td>
+						<td>	{{stock.Sector}}	</td>
+						<td>	{{stock.Industry}}	</td>
+						
+					{% endfor %}
+				</tr>
+			</div>
+		</tbody>
+	</table>
+
+<div class="pagination">
+	<span class="step-links">
+		{% if data.has_previous %}
+			<a href="?page=1">&laquo; first</a>
+			<a href="?page={{ data.previous_page_number }}">previous</a>
+		{% endif %}
+		<span class="current">
+			Page {{ data.number }} of {{ data.paginator.num_pages }}.
+		</span>
+		{% if data.has_next %}
+			<a href="?page={{ data.next_page_number }}">next</a>
+			<a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+		{% endif %}
+	</span>
+</div>
+
+
+	{% endblock %}
+</body>
+</html>
