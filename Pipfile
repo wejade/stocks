@@ -12,7 +12,10 @@ django = "*"
 matplotlib = "*"
 numpy = "*"
 django-redis = "*"
+gunicorn = "*"
 
 
 [dev-packages]
 
+[requires]
+python_version = "3.6"
